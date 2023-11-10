@@ -13,25 +13,33 @@ namespace dotnet_todo.Services.CharacterService
             new(),
             new() { Id = 1, Name = "Sam" }
         };
-        public async Task<List<Character>> AddCharacter(Character newCharacter)
+        public async Task<ServiceResponse<List<Character>>> AddCharacter(Character newCharacter)
         {
             characters.Add(newCharacter);
-            return characters;
+            var response = new ServiceResponse<List<Character>>
+            {
+                Data = characters
+            };
+            return response;
         }
 
-        public async Task<List<Character>> GetAllCharacters()
+        public async Task<ServiceResponse<List<Character>>> GetAllCharacters()
         {
-            return characters;
+            var response = new ServiceResponse<List<Character>>
+            {
+                Data = characters
+            };
+            return response;
         }
 
-        public async Task<Character> GetCharacterById(int id)
+        public async Task<ServiceResponse<Character>> GetCharacterById(int id)
         {
             var character = characters.FirstOrDefault(c => c.Id == id);
-            if (character != null)
+            var response = new ServiceResponse<Character>
             {
-                return character;
-            }
-            throw new Exception($"Character not found with id {id}");
+                Data = character
+            };
+            return response;
         }
     }
 }
