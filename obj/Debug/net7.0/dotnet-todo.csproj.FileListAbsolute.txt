@@ -31,3 +31,5 @@
 /home/rtn/dotnet-todo/obj/Debug/net7.0/dotnet-todo.pdb
 /home/rtn/dotnet-todo/obj/Debug/net7.0/dotnet-todo.genruntimeconfig.cache
 /home/rtn/dotnet-todo/obj/Debug/net7.0/ref/dotnet-todo.dll
+/home/rtn/dotnet-todo/bin/Debug/net7.0/AutoMapper.dll
+/home/rtn/dotnet-todo/bin/Debug/net7.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
