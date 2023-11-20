@@ -23,7 +23,7 @@ namespace dotnet_todo.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> Get()
         {
-            return Ok(await _characterService.GetAllCharacters());
+            return Ok(await _characterService.GetAllCharactersFromDatabase());
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> GetSingle(int id)
@@ -55,6 +55,21 @@ namespace dotnet_todo.Controllers
                 return NotFound(response);
             }
             return Ok(response);
+        }
+        [HttpPut("Save")]
+        public async Task<ActionResult<ServiceResponse<List<bool>>>> SaveCharactersToDatabase()
+        {
+            var characters = await _characterService.GetAllCharacters();
+            if (!characters.Success)
+            {
+                return BadRequest(characters);
+            }
+            var saveResponse = await _characterService.SaveCharactersToDatabase(characters.Data);
+            if (!saveResponse.Success)
+            {
+                return BadRequest(saveResponse);
+            }
+            return Ok(saveResponse);
         }
     };
 }
