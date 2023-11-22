@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kXxG9U2N1f2t4koOM4dujf/j6okHqyt08TKIPGYazinxrIigLqwGeMeMhXqIz8LWAECbCBwf5MGNio0a48fCVw==",
+  "dgSpecHash": "eifk9fEAC+CEEUqHu7OCC8NfKHLoov/QTsnjBKeLvAElyOkR4Y5A6YH/2afq86eVJdw+mVbsMep96AJYZ0YgQQ==",
   "success": true,
   "projectFilePath": "/home/rtn/dotnet-todo/dotnet-todo.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,7 @@
     "/home/rtn/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/rtn/.nuget/packages/microsoft.aspnetcore.openapi/8.0.0/microsoft.aspnetcore.openapi.8.0.0.nupkg.sha512",
     "/home/rtn/.nuget/packages/microsoft.bcl.asyncinterfaces/6.0.0/microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
-    "/home/rtn/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.3/microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
+    "/home/rtn/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.4/microsoft.codeanalysis.analyzers.3.3.4.nupkg.sha512",
     "/home/rtn/.nuget/packages/microsoft.codeanalysis.common/4.5.0/microsoft.codeanalysis.common.4.5.0.nupkg.sha512",
     "/home/rtn/.nuget/packages/microsoft.codeanalysis.csharp/4.5.0/microsoft.codeanalysis.csharp.4.5.0.nupkg.sha512",
     "/home/rtn/.nuget/packages/microsoft.codeanalysis.csharp.workspaces/4.5.0/microsoft.codeanalysis.csharp.workspaces.4.5.0.nupkg.sha512",
