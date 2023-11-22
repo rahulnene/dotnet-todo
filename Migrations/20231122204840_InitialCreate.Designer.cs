@@ -10,14 +10,14 @@ using dotnet_todo;
 namespace dotnet_todo.Migrations
 {
     [DbContext(typeof(CharacterDbContext))]
-    [Migration("20231120130619_trial1")]
-    partial class trial1
+    [Migration("20231122204840_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
             modelBuilder.Entity("dotnet_todo.Models.Character", b =>
                 {

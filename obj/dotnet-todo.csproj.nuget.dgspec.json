@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/home/rtn/dotnet-todo/dotnet-todo.csproj": {}
+    "C:\\Users\\rahul\\source\\repos\\rahulnene\\dotnet-todo\\dotnet-todo.csproj": {}
   },
   "projects": {
-    "/home/rtn/dotnet-todo/dotnet-todo.csproj": {
+    "C:\\Users\\rahul\\source\\repos\\rahulnene\\dotnet-todo\\dotnet-todo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/rtn/dotnet-todo/dotnet-todo.csproj",
+        "projectUniqueName": "C:\\Users\\rahul\\source\\repos\\rahulnene\\dotnet-todo\\dotnet-todo.csproj",
         "projectName": "dotnet-todo",
-        "projectPath": "/home/rtn/dotnet-todo/dotnet-todo.csproj",
-        "packagesPath": "/home/rtn/.nuget/packages/",
-        "outputPath": "/home/rtn/dotnet-todo/obj/",
+        "projectPath": "C:\\Users\\rahul\\source\\repos\\rahulnene\\dotnet-todo\\dotnet-todo.csproj",
+        "packagesPath": "C:\\Users\\rahul\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rahul\\source\\repos\\rahulnene\\dotnet-todo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/rtn/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\rahul\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -90,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

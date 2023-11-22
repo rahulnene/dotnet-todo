@@ -14,8 +14,7 @@ namespace dotnet_todo.Migrations
                 name: "Characters",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     HitPoints = table.Column<int>(type: "INTEGER", nullable: false),
                     Strength = table.Column<int>(type: "INTEGER", nullable: false),
