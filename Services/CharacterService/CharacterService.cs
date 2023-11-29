@@ -24,70 +24,60 @@ namespace dotnet_todo.Services.CharacterService
             _context = context;
 
         }
-        public async Task<ServiceResponse<List<GetCharacterDTO>>> AddCharacter(AddCharacterDTO newCharacter)
+        public async Task<List<GetCharacterDTO>?> AddCharacter(AddCharacterDTO newCharacter)
         {
-            var character = _mapper.Map<Character>(newCharacter);
-            character.Id = characters.Max(c => c.Id) + 1;
-            characters.Add(character);
-            var response = new ServiceResponse<List<GetCharacterDTO>>
-            {
-                Data = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList()
-            };
-            return response;
-        }
-
-        public async Task<ServiceResponse<List<GetCharacterDTO>>> DeleteCharacter(int id)
-        {
-            var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
             try
+            {   
+                var characters = _mapper.Map<List<Character>>(await GetAllCharactersFromDatabase());
+                var character = _mapper.Map<Character>(newCharacter);
+                if (characters == null)
+                {
+                    character.Id = 1;
+                }
+                else
+                {
+                    character.Id = characters.Max(c => c.Id) + 1;
+                }
+                characters.Add(character);
+                await SaveCharactersToDatabase(characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList());
+                return characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
+            } 
+            catch (Exception)
             {
-                var character = characters.FirstOrDefault(c => c.Id == id) ?? throw new Exception($"Character with id {id} not found.");
-                characters.Remove(character);
-                serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
+                return null;
             }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
-
-            return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharacters()
+        public async Task<List<GetCharacterDTO>?> DeleteCharacter(int id)
         {
-            var response = new ServiceResponse<List<GetCharacterDTO>>
-            {
-                Data = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList()
-            };
+            var character = characters.FirstOrDefault(c => c.Id == id) ?? throw new Exception($"Character with id {id} not found.");
+            characters.Remove(character);
+            var response = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
+            await SaveCharactersToDatabase(characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList());
             return response;
         }
 
+        public async Task<List<GetCharacterDTO>?> GetAllCharacters()
+        {
+            return characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
+        }
 
-        public async Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharactersFromDatabase()
+
+        public async Task<List<GetCharacterDTO>?> GetAllCharactersFromDatabase()
         {
             var characters = await _context.Characters.ToListAsync();
-            var response = new ServiceResponse<List<GetCharacterDTO>>
-            {
-                Data = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList()
-            };
-            return response;
+            return characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
         }
 
-        public async Task<ServiceResponse<GetCharacterDTO>> GetCharacterById(int id)
+        public async Task<GetCharacterDTO?> GetCharacterById(int id)
         {
+            var characters = await GetAllCharactersFromDatabase();
             var character = characters.FirstOrDefault(c => c.Id == id);
-            var response = new ServiceResponse<GetCharacterDTO>
-            {
-                Data = _mapper.Map<GetCharacterDTO>(character)
-            };
-            return response;
+            return character == null ? throw new Exception($"Character with id {id} not found.") : _mapper.Map<GetCharacterDTO>(character);
         }
 
-        public async Task<ServiceResponse<bool>> SaveCharactersToDatabase(List<GetCharacterDTO> characters)
+        public async Task SaveCharactersToDatabase(List<GetCharacterDTO> characters)
         {
-            var serviceResponse = new ServiceResponse<bool>();
-            var counter = 0;
             try
             {
                 using var db = _context;
@@ -106,34 +96,18 @@ namespace dotnet_todo.Services.CharacterService
                         var newCharacter = _mapper.Map<Character>(characterDto);
                         await db.Characters.AddAsync(newCharacter);
                     }
-                    counter += db.ChangeTracker.Entries().Count(e => e.State == EntityState.Added || e.State == EntityState.Modified);
                     db.SaveChanges();
                 }
                 await db.SaveChangesAsync();
-                int numberOfObjectsWritten = counter;
-                Console.WriteLine($"{numberOfObjectsWritten} records saved to database");
-                if (numberOfObjectsWritten > 0)
-                {
-                    serviceResponse.Data = true;
-                    serviceResponse.Message = $"{numberOfObjectsWritten} characters saved to database.";
-                }
-                else
-                {
-                    serviceResponse.Data = false;
-                    serviceResponse.Message = "No characters were saved to the database.";
-                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                serviceResponse.Success = false;
-                serviceResponse.Message = $"Error saving characters: {ex}";
+                throw new Exception("Error saving characters to database.");
             }
-            return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetCharacterDTO>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
+        public async Task<GetCharacterDTO?> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
         {
-            var serviceResponse = new ServiceResponse<GetCharacterDTO>();
             try
             {
                 var character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id) ?? throw new Exception($"Character with id {updatedCharacter.Id} not found.");
@@ -143,15 +117,14 @@ namespace dotnet_todo.Services.CharacterService
                 character.HitPoints = updatedCharacter.HitPoints;
                 character.Intelligence = updatedCharacter.Intelligence;
                 character.Strength = updatedCharacter.Strength;
-                serviceResponse.Data = _mapper.Map<GetCharacterDTO>(character);
+                await SaveCharactersToDatabase(characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList());
+                return _mapper.Map<GetCharacterDTO>(character);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
+                throw new Exception("Error updating character.");
             }
 
-            return serviceResponse;
         }
     }
 }

@@ -9,13 +9,13 @@ namespace dotnet_todo.Services.CharacterService
 {
     public interface ICharacterService
     {
-        Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharacters();
-        Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharactersFromDatabase();
-        Task<ServiceResponse<GetCharacterDTO>> GetCharacterById(int id);
-        Task<ServiceResponse<List<GetCharacterDTO>>> AddCharacter(AddCharacterDTO newCharacter);
-        Task<ServiceResponse<GetCharacterDTO>> UpdateCharacter(UpdateCharacterDTO updatedCharacter);
-        Task<ServiceResponse<List<GetCharacterDTO>>> DeleteCharacter(int id);
-        Task<ServiceResponse<bool>> SaveCharactersToDatabase(List<GetCharacterDTO> characters);
+        Task<List<GetCharacterDTO>?> GetAllCharacters();
+        Task<List<GetCharacterDTO>?> GetAllCharactersFromDatabase();
+        Task<GetCharacterDTO?> GetCharacterById(int id);
+        Task<List<GetCharacterDTO>?> AddCharacter(AddCharacterDTO newCharacter);
+        Task<GetCharacterDTO?> UpdateCharacter(UpdateCharacterDTO updatedCharacter);
+        Task<List<GetCharacterDTO>?> DeleteCharacter(int id);
+        Task SaveCharactersToDatabase(List<GetCharacterDTO> characters);
 
     }
 }

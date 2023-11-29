@@ -9,7 +9,7 @@ namespace dotnet_todo.Models
     public class Character
     {
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
 
         [Required]
         [Length(2, 50)]

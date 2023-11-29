@@ -21,55 +21,94 @@ namespace dotnet_todo.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> Get()
+        public async Task<ActionResult<List<GetCharacterDTO>>> Get()
         {
-            return Ok(await _characterService.GetAllCharactersFromDatabase());
+            var result = await _characterService.GetAllCharactersFromDatabase();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> GetSingle(int id)
+        public async Task<ActionResult<List<GetCharacterDTO>>> GetSingle(int id)
         {
-            return Ok(await _characterService.GetCharacterById(id));
+            try
+            {
+                return Ok(await _characterService.GetCharacterById(id));
+            } 
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> AddCharacter(AddCharacterDTO newCharacter)
+        public async Task<ActionResult<List<GetCharacterDTO>>> AddCharacter(AddCharacterDTO newCharacter)
         {
-            return Ok(await _characterService.AddCharacter(newCharacter));
+            try
+            {
+                var response = await _characterService.AddCharacter(newCharacter);
+                if (response == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                return UnprocessableEntity();
+            }
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
+        public async Task<ActionResult<List<GetCharacterDTO>>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
         {
-            var response = await _characterService.UpdateCharacter(updatedCharacter);
-            if (response.Data == null)
+            GetCharacterDTO? response;
+            try
             {
-                return NotFound(response);
+                response = await _characterService.UpdateCharacter(updatedCharacter);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("not found"))
+                {
+                    return NotFound(ex.Message);
+                }
+                return BadRequest();
             }
             return Ok(response);
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> DeleteCharacter(int id)
+        public async Task<ActionResult<List<GetCharacterDTO>>> DeleteCharacter(int id)
         {
-            var response = await _characterService.DeleteCharacter(id);
-            if (response.Data == null)
+            try
             {
-                return NotFound(response);
+                var response = await _characterService.DeleteCharacter(id);
+                return Ok(response);
             }
-            return Ok(response);
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("not found"))
+                {
+                    return NotFound(ex.Message);
+                }
+                return BadRequest();
+            }
         }
         [HttpPut("Save")]
-        public async Task<ActionResult<ServiceResponse<List<bool>>>> SaveCharactersToDatabase()
+        public async Task<ActionResult> SaveCharactersToDatabase()
         {
             var characters = await _characterService.GetAllCharacters();
-            if (!characters.Success)
+            try
             {
-                return BadRequest(characters);
+                await _characterService.SaveCharactersToDatabase(characters);
             }
-            var saveResponse = await _characterService.SaveCharactersToDatabase(characters.Data);
-            if (!saveResponse.Success)
+            catch (Exception ex)
             {
-                return BadRequest(saveResponse);
+                return BadRequest(ex.Message);
             }
-            return Ok(saveResponse);
+            return Ok();
         }
     };
 }

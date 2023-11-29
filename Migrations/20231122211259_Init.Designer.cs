@@ -10,8 +10,8 @@ using dotnet_todo;
 namespace dotnet_todo.Migrations
 {
     [DbContext(typeof(CharacterDbContext))]
-    [Migration("20231122205128_Validations1")]
-    partial class Validations1
+    [Migration("20231122211259_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
