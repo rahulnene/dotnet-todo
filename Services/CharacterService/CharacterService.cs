@@ -22,7 +22,7 @@ namespace dotnet_todo.Services.CharacterService
         public async Task<List<GetCharacterDTO>?> AddCharacter(AddCharacterDTO newCharacter)
         {
             try
-            {   
+            {
                 var characters = _mapper.Map<List<Character>>(await GetAllCharactersFromDatabase());
                 var character = _mapper.Map<Character>(newCharacter);
                 if (characters == null)
@@ -36,7 +36,7 @@ namespace dotnet_todo.Services.CharacterService
                 characters.Add(character);
                 await SaveCharactersToDatabase(characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList());
                 return characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
-            } 
+            }
             catch (Exception)
             {
                 return null;

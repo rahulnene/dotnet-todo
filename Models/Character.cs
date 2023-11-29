@@ -9,7 +9,7 @@ namespace dotnet_todo.Models
 
         [Required]
         [Length(2, 50)]
-        public string Name { get; set; } = "Frodo";
+        public string Name { get; set; }
 
         [Range(0, 1000)]
         public int HitPoints { get; set; } = 100;
