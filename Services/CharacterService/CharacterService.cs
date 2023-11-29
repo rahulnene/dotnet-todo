@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using dotnet_todo.DTOs.Characters;
 using dotnet_todo.Models;

@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using dotnet_todo.DTOs.Characters;
-using dotnet_todo.Models;
 using dotnet_todo.Services.CharacterService;
 using Microsoft.AspNetCore.Mvc;
 
