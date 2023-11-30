@@ -1,4 +1,4 @@
-using dotnet_todo.DTOs.Characters;
+using dotnet_todo.Models;
 using dotnet_todo.Services.CharacterService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +16,9 @@ namespace dotnet_todo.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<GetCharacterDTO>>> Get()
+        public async Task<ActionResult<List<Character>>> Get()
         {
-            var result = await _characterService.GetAllCharactersFromDatabase();
+            var result = await _characterService.GetAllCharacters();
             if (result == null)
             {
                 return NotFound();
@@ -27,7 +27,7 @@ namespace dotnet_todo.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<GetCharacterDTO>>> GetSingle(int id)
+        public async Task<ActionResult<List<Character>>> GetSingle(int id)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace dotnet_todo.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult<List<GetCharacterDTO>>> AddCharacter(AddCharacterDTO newCharacter)
+        public async Task<ActionResult<List<Character>>> AddCharacter(Character newCharacter)
         {
             try
             {
@@ -56,10 +56,10 @@ namespace dotnet_todo.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<GetCharacterDTO>>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
+        [HttpPut("update")]
+        public async Task<ActionResult<List<Character>>> UpdateCharacter(Character updatedCharacter)
         {
-            GetCharacterDTO? response;
+            List<Character>? response;
             try
             {
                 response = await _characterService.UpdateCharacter(updatedCharacter);
@@ -74,8 +74,8 @@ namespace dotnet_todo.Controllers
             }
             return Ok(response);
         }
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<List<GetCharacterDTO>>> DeleteCharacter(int id)
+        [HttpDelete("/delete/{id}")]
+        public async Task<ActionResult<List<Character>>> DeleteCharacter(int id)
         {
             try
             {
@@ -90,20 +90,6 @@ namespace dotnet_todo.Controllers
                 }
                 return BadRequest();
             }
-        }
-        [HttpPut("Save")]
-        public async Task<ActionResult> SaveCharactersToDatabase()
-        {
-            var characters = await _characterService.GetAllCharacters();
-            try
-            {
-                await _characterService.SaveCharactersToDatabase(characters);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            return Ok();
         }
     };
 }

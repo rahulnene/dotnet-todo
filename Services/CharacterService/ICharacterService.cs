@@ -1,16 +1,14 @@
-using dotnet_todo.DTOs.Characters;
+using dotnet_todo.Models;
 
 namespace dotnet_todo.Services.CharacterService
 {
     public interface ICharacterService
     {
-        Task<List<GetCharacterDTO>?> GetAllCharacters();
-        Task<List<GetCharacterDTO>?> GetAllCharactersFromDatabase();
-        Task<GetCharacterDTO?> GetCharacterById(int id);
-        Task<List<GetCharacterDTO>?> AddCharacter(AddCharacterDTO newCharacter);
-        Task<GetCharacterDTO?> UpdateCharacter(UpdateCharacterDTO updatedCharacter);
-        Task<List<GetCharacterDTO>?> DeleteCharacter(int id);
-        Task SaveCharactersToDatabase(List<GetCharacterDTO> characters);
+        Task<List<Character>?> GetAllCharacters();
+        Task<Character?> GetCharacterById(int id);
+        Task<List<Character>?> AddCharacter(Character newCharacter);
+        Task<List<Character>?> UpdateCharacter(Character updatedCharacter);
+        Task<List<Character>?> DeleteCharacter(int id);
 
     }
 }

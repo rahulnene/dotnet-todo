@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace dotnet_todo.Models
 {
-    public class Character
+    public class Character: IActorInterface
     {
         [Key]
         public int Id { get; set; } = 0;
