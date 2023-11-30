@@ -1,16 +1,18 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace dotnet_todo.Models
 {
-    public class Character: IActorInterface
+    public class Character: IActor
     {
         [Key]
-        [Range(1, 1000)]
-        public int Id { get; set; } = 0;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         [Required]
         [Length(2, 50)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Range(0, 1000)]
         public int HitPoints { get; set; } = 100;

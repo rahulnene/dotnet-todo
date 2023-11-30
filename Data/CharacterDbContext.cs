@@ -16,7 +16,7 @@ namespace dotnet_todo.Data
         {
             modelBuilder.Entity<Character>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
         }
 

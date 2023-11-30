@@ -7,29 +7,24 @@ namespace dotnet_todo.Services.CharacterService
 {
     public class CharacterService : ICharacterService
     {
-        private static List<Character> characters = new()
-        {
-            new() { Id = 1, Name = "Sam" }
-        };
+        private static List<Character>? _characters;
         private readonly IRepository<Character> _repository;
         private readonly IMapper _mapper;
 
-        public CharacterService(IMapper mapper, IRepository<Character> repository)
+        public CharacterService(IRepository<Character> repository)
         {
-            _mapper = mapper;
             _repository = repository;
 
         }
-        public async Task<List<Character>?> AddCharacter(Character newCharacter)
+        public async Task<int> AddCharacter(Character newCharacter)
         {
-            await _repository.Add(_mapper.Map<Character>(newCharacter));
-            return await GetAllCharacters();
+            var entity_id = await _repository.Add(newCharacter);
+            return entity_id;
         }
 
-        public async Task<List<Character>?> DeleteCharacter(int id)
+        public async Task DeleteCharacter(int id)
         {
             await _repository.Delete(id);
-            return await GetAllCharacters();
         }
 
         public async Task<List<Character>?> GetAllCharacters()
@@ -38,10 +33,9 @@ namespace dotnet_todo.Services.CharacterService
         }
 
 
-        public async Task<Character?> GetCharacterById(int id)
+        public async Task<Character> GetCharacterById(int id)
         {
-            await _repository.Get(id);
-            return _mapper.Map<Character>(characters.FirstOrDefault(c => c.Id == id));
+            return await _repository.Get(id);
         }
 
         public async Task<List<Character>?> UpdateCharacter(Character updatedCharacter)

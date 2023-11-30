@@ -16,7 +16,7 @@ namespace dotnet_todo.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<Character>>> Get()
+        public async Task<ActionResult<List<Character>?>> Get()
         {
             var result = await _characterService.GetAllCharacters();
             if (result == null)
@@ -27,7 +27,7 @@ namespace dotnet_todo.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Character>>> GetSingle(int id)
+        public async Task<ActionResult<List<Character>?>> GetSingle(int id)
         {
             try
             {
@@ -38,16 +38,12 @@ namespace dotnet_todo.Controllers
                 return NotFound(ex.Message);
             }
         }
-        [HttpPost]
-        public async Task<ActionResult<List<Character>>> AddCharacter(Character newCharacter)
+        [HttpPost("new")]
+        public async Task<ActionResult<int>> AddCharacter(Character newCharacter)
         {
             try
             {
                 var response = await _characterService.AddCharacter(newCharacter);
-                if (response == null)
-                {
-                    return BadRequest();
-                }
                 return Ok(response);
             }
             catch (Exception)
@@ -57,7 +53,7 @@ namespace dotnet_todo.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult<List<Character>>> UpdateCharacter(Character updatedCharacter)
+        public async Task<ActionResult<List<Character>?>> UpdateCharacter(Character updatedCharacter)
         {
             List<Character>? response;
             try
@@ -74,14 +70,14 @@ namespace dotnet_todo.Controllers
             }
             return Ok(response);
         }
-        [HttpDelete("/delete/{id}")]
-        public async Task<ActionResult<List<Character>>> DeleteCharacter(int id)
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult<List<Character>?>> DeleteCharacter(int id)
         {
             try
             {
-                var response = await _characterService.DeleteCharacter(id);
-                return Ok(response);
-            }
+                await _characterService.DeleteCharacter(id);
+				return Ok();
+			}
             catch (Exception ex)
             {
                 if (ex.Message.Contains("not found"))
