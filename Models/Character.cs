@@ -5,6 +5,7 @@ namespace dotnet_todo.Models
     public class Character: IActorInterface
     {
         [Key]
+        [Range(1, 1000)]
         public int Id { get; set; } = 0;
 
         [Required]
@@ -23,6 +24,9 @@ namespace dotnet_todo.Models
         [Range(0, 1000)]
         public int Intelligence { get; set; } = 10;
 
-        public RPGClass Class { get; set; } = RPGClass.Knight;
+        [Required]
+        [Length(2, 50)]
+        [RegularExpression(@"^[A-Z][a-z]+$")]
+        public string Class { get; set; } = "Knight";
     }
 }
