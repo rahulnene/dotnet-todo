@@ -16,7 +16,8 @@ namespace dotnet_todo.Data
         {
             modelBuilder.Entity<Character>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasDefaultValueSql("randomblob(16)");
+                entity.HasIndex(e => e.Id).IsUnique();
             });
         }
 
