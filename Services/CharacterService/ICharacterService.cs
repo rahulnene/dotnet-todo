@@ -7,7 +7,7 @@ namespace dotnet_todo.Services.CharacterService
         Task<List<Character>?> GetAllCharacters();
         Task<Character> GetCharacterById(int id);
         Task<int> AddCharacter(Character newCharacter);
-        Task<List<Character>?> UpdateCharacter(Character updatedCharacter);
+        Task UpdateCharacter(UpdateCharacterDTO updatedCharacter);
         Task DeleteCharacter(int id);
 
     }

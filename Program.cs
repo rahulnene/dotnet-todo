@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddDbContext<CharacterDbContext>(options => options.UseSqlite("Data Source=Characters.db"));
-builder.Services.AddScoped<IRepository<Character>, Repository<Character>>();
+builder.Services.AddScoped<IRepository<Character>, CharacterRepository<Character>>();
 
 var app = builder.Build();
 

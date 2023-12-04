@@ -38,11 +38,9 @@ namespace dotnet_todo.Services.CharacterService
             return await _repository.Get(id);
         }
 
-        public async Task<List<Character>?> UpdateCharacter(Character updatedCharacter)
+        public async Task UpdateCharacter(UpdateCharacterDTO updatedCharacter)
         {
             await _repository.Update(updatedCharacter);
-            return await GetAllCharacters();
-
         }
     }
 }

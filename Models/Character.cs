@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace dotnet_todo.Models
 {
@@ -26,7 +25,6 @@ namespace dotnet_todo.Models
         [Range(0, 1000)]
         public int Intelligence { get; set; } = 10;
 
-        [Required]
         [Length(2, 50)]
         [RegularExpression(@"^[A-Z][a-z]+$")]
         public string Class { get; set; } = "Knight";

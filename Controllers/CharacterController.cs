@@ -32,7 +32,7 @@ namespace dotnet_todo.Controllers
             try
             {
                 return Ok(await _characterService.GetCharacterById(id));
-            } 
+            }
             catch (Exception ex)
             {
                 return NotFound(ex.Message);
@@ -52,13 +52,12 @@ namespace dotnet_todo.Controllers
             }
         }
 
-        [HttpPut("update")]
-        public async Task<ActionResult<List<Character>?>> UpdateCharacter(Character updatedCharacter)
+        [HttpPatch("update")]
+        public async Task<ActionResult> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
         {
-            List<Character>? response;
             try
             {
-                response = await _characterService.UpdateCharacter(updatedCharacter);
+                await _characterService.UpdateCharacter(updatedCharacter);
             }
             catch (Exception ex)
             {
@@ -66,9 +65,9 @@ namespace dotnet_todo.Controllers
                 {
                     return NotFound(ex.Message);
                 }
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
-            return Ok(response);
+            return Ok();
         }
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult<List<Character>?>> DeleteCharacter(int id)
@@ -76,8 +75,8 @@ namespace dotnet_todo.Controllers
             try
             {
                 await _characterService.DeleteCharacter(id);
-				return Ok();
-			}
+                return Ok();
+            }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("not found"))
