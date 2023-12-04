@@ -1,4 +1,5 @@
 ﻿using dotnet_todo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_todo.Data
 {
@@ -9,6 +10,5 @@ namespace dotnet_todo.Data
         Task<int> Add(T entity);
         Task Update<U>(U entity) where U:class,IActor;
         Task Delete(int id);
-        Task SaveChanges();
     }
 }

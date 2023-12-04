@@ -14,7 +14,7 @@ namespace dotnet_todo.Data
         public async Task<int> Add(T entity)
         {
             _context.Add(entity);
-            await SaveChanges();
+            await _context.SaveChangesAsync();
             return entity.Id;
         }
 
@@ -24,7 +24,7 @@ namespace dotnet_todo.Data
             {
                 var existingEntity = await Get(id);
                 _context.Remove(existingEntity);
-                await SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -44,11 +44,6 @@ namespace dotnet_todo.Data
 
         }
 
-        public async Task SaveChanges()
-        {
-            await _context.SaveChangesAsync();
-        }
-
         public async Task Update<U>(U updatedEntity) where U : class, IActor
         {
             var existingEntity = await Get(updatedEntity.Id);
@@ -64,8 +59,5 @@ namespace dotnet_todo.Data
             }
             await _context.SaveChangesAsync();
         }
-
-
-
     }
 }
