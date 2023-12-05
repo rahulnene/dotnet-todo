@@ -5,19 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_todo.Services.CharacterService
 {
-    public class CharacterService : ICharacterService
+    public class CharacterService(IRepository<Character> repository) : ICharacterService
     {
-        private static List<Character>? _characters;
-        private readonly IRepository<Character> _repository;
+        private readonly IRepository<Character> _repository = repository;
         private readonly IMapper _mapper;
 
-        public CharacterService(IRepository<Character> repository)
-        {
-            _repository = repository;
-
-        }
         public async Task<int> AddCharacter(Character newCharacter)
         {
+            var AllChars = await _repository.GetAll();
+            var AllIds = AllChars.Select(h => h.Id);
+            var RNG = new Random();
+            int rand_id = RNG.Next();
+            while (AllIds.Contains(rand_id))
+            {
+                rand_id = RNG.Next();
+            }
+            newCharacter.Id = rand_id;
             var entity_id = await _repository.Add(newCharacter);
             return entity_id;
         }
@@ -29,7 +32,8 @@ namespace dotnet_todo.Services.CharacterService
 
         public async Task<List<Character>?> GetAllCharacters()
         {
-            return await _repository.GetAll() as List<Character>;
+            var result = await _repository.GetAll();
+            return result;
         }
 
 

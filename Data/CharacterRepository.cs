@@ -4,13 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_todo.Data
 {
-    public class CharacterRepository<T> : IRepository<T> where T : class, IActor
+    public class CharacterRepository<T>(CharacterDbContext context) : IRepository<T> where T : class, IActor
     {
-        protected readonly CharacterDbContext _context;
-        public CharacterRepository(CharacterDbContext context)
-        {
-            _context = context;
-        }
+        protected readonly CharacterDbContext _context = context;
+
         public async Task<int> Add(T entity)
         {
             _context.Add(entity);
@@ -38,7 +35,7 @@ namespace dotnet_todo.Data
             return result ?? throw new Exception($"Entity with id {id} not found.");
         }
 
-        public async Task<IEnumerable<T>?> GetAll()
+        public async Task<List<T>?> GetAll()
         {
             return await _context.Set<T>().ToListAsync();
 

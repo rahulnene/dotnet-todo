@@ -1,5 +1,6 @@
 using dotnet_todo.Models;
 using dotnet_todo.Services.CharacterService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_todo.Controllers
@@ -16,7 +17,7 @@ namespace dotnet_todo.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<Character>?>> Get()
+        public async Task<ActionResult<List<Character>>> Get()
         {
             var result = await _characterService.GetAllCharacters();
             if (result == null)
@@ -40,7 +41,7 @@ namespace dotnet_todo.Controllers
         }
         [HttpPost("new")]
         public async Task<ActionResult<int>> AddCharacter(Character newCharacter)
-        {
+        {   
             try
             {
                 var response = await _characterService.AddCharacter(newCharacter);
@@ -69,6 +70,7 @@ namespace dotnet_todo.Controllers
             }
             return Ok();
         }
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult<List<Character>?>> DeleteCharacter(int id)
         {
