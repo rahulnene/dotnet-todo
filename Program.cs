@@ -14,9 +14,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<ICharacterService, CharacterService>();
+
+//Comment/Uncomment the below lines as needed to use SQLite(first two) or Elastic
+
 //builder.Services.AddDbContext<CharacterDbContext>(options => options.UseSqlite("Data Source=Characters.db"));
 //builder.Services.AddScoped<IRepository<Character>, CharacterRepository<Character>>();
+
 builder.Services.AddScoped<IRepository<Character>, ElasticCharacterRepository<Character>>();
+
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer();
 
